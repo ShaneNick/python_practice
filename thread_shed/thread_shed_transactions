@@ -1,0 +1,81 @@
+# String containing daily sales data
+daily_sales = \
+"""Edith Mcbride   ;,;$1.21   ;,;   white ;,;...
+...,;   09/15/17,   Javier Bailey   ;,;   
+$24.49   ;,; black&red ;,; 09/15/17   , Everett Lyons ;,;$1.81;,;   black&red ;,; 09/15/17 ,   
+Abraham Maxwell;,; $6.81   ;,;green;,;   09/15/17   
+,   Traci Craig ;,;$0.65;,; green&yellow;,; 
+09/15/17 , Jeffrey Jenkins   ;,;$26.45;,; 
+green&yellow&blue   ;,;   09/15/17,   Merle Wilson 
+;,;   $7.69 ;,; purple;,; 09/15/17,Janis Franklin   
+;,;$8.74   ;,; purple&black   ;,;09/15/17 ,  
+Leonard Guerrero ;,;   $1.86   ;,;yellow  
+;,;09/15/17,Lana Sanchez;,;$14.75   ;,; yellow;,;   
+09/15/17   ,Donna Ball ;,; $28.10  ;,; 
+yellow&blue;,;   09/15/17   , Terrell Barber   ;,; 
+$9.91   ;,; green ;,;09/15/17   ,Jody Flores;,; 
+$16.34 ;,; green ;,;   09/15/17,   Daryl Herrera 
+;,;$27.57;,; white;,;   09/15/17   , Miguel Mcguire;,;$5.25;,; white&blue   ;,;   09/15/17 ,   
+Rogelio Gonzalez;,; $9.51;,;   white&black&blue   
+;,;   09/15/17   ,   Lora Hammond ;,;$20.56 ;,; 
+green;,;   09/15/17,Owen Ward;,; $21.64   ;,;   
+green&yellow;,;09/15/17,Malcolm Morales ;,;   
+$24.99   ;,;   green&yellow&black;,; 09/15/17 ,   
+Eric Mcdaniel ;,;$29.70;,; green ;,; 09/15/17 
+,Madeline Estrada;,;   $15.52;,;green;,;   09/15/17 
+, Leticia Manning;,;$15.70 ;,; green&purple;,; 
+09/15/17 ,   Mario Wallace ;,; $12.36 ;,;green ;,; 
+09/15/17,Lewis Glover;,;   $13.66   ;,;   
+green&white;,;09/15/17,   Gail Phelps   ;,;$30.52   
+;,; green&white&blue   ;,; 09/15/17 , Myrtle Morris 
+;,;   $22.66   ;,; green&white&blue;,;09/15/17"""
+
+# Replacing special character sequences and splitting the sales data
+daily_sales_replaced = daily_sales.replace(";,;", "|")
+daily_transactions = daily_sales_replaced.split(",")
+
+# Further splitting each transaction into its components
+daily_transactions_split = []
+for transaction in daily_transactions:
+    split_transaction = transaction.split("|")
+    daily_transactions_split.append(split_transaction)
+
+# Cleaning each transaction and extracting relevant data
+transactions_clean = []
+for transaction in daily_transactions_split:
+    cleaned_transaction = [data_point.strip() for data_point in transaction]
+    transactions_clean.append(cleaned_transaction)
+
+# Counting occurrences of the color "white"
+count_white = sum("white" in item for transaction in transactions_clean for item in transaction)
+print("Total count of 'white':", count_white)
+
+# Extracting customer names, sales, and thread colors sold
+customers, sales, thread_sold = [], [], []
+for transaction in transactions_clean:
+    if len(transaction) >= 3:  # Ensure the transaction has enough data
+        customers.append(transaction[0])
+        sales.append(transaction[1])
+        thread_sold.append(transaction[2])
+
+# Calculating total sales amount
+total_sales = sum(float(sale.strip("$")) for sale in sales)
+print("Your total today is: {:.2f}".format(total_sales))
+
+# Splitting each thread color sold into individual colors
+thread_sold_split = []
+for thread in thread_sold:
+    if "&" in thread:
+        thread_sold_split.extend(thread.split("&"))
+    else:
+        thread_sold_split.append(thread)
+
+# Function to count the occurrences of a specific color
+def color_count(color):
+    return thread_sold_split.count(color)
+
+# Displaying count of each color sold
+colors = ['red', 'yellow', 'green', 'white', 'black', 'blue', 'purple']
+for color in colors:
+    count = color_count(color)  
+    print("Color: {}, Count: {}".format(color, count))
