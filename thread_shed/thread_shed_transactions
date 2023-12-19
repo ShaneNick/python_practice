@@ -79,3 +79,4 @@ colors = ['red', 'yellow', 'green', 'white', 'black', 'blue', 'purple']
 for color in colors:
     count = color_count(color)  
     print("Color: {}, Count: {}".format(color, count))
+od      
