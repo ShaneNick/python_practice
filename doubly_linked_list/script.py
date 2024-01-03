@@ -83,3 +83,54 @@ class DoublyLinkedList:
             self.remove_tail()
 
         return removed_head.get_value()
+
+    def remove_tail(self):
+        # Store the current tail in removed_tail
+        removed_tail = self.tail_node
+
+        # If the list is empty (tail is None), return None
+        if removed_tail is None:
+            return None
+
+        # Set the list's tail to the previous node of the current tail
+        self.tail_node = removed_tail.get_prev_node()
+
+        # If the list is not empty after removal, set the new tail's next node to None
+        if self.tail_node is not None:
+            self.tail_node.set_next_node(None)
+
+        # Special case: if the tail is also the head, call remove_head()
+        if removed_tail == self.head_node:
+            self.remove_head()
+
+        # Return the value of the removed tail
+        return removed_tail.get_value()
+
+    def remove_by_value(self, value_to_remove):
+        # Initialize node_to_remove as None
+        node_to_remove = None
+        # Start from the head of the list
+        current_node = self.head_node
+
+        # Iterate through the list
+        while current_node is not None:
+            # Check if the current node's value matches the value to remove
+            if current_node.get_value() == value_to_remove:
+                node_to_remove = current_node
+                break
+
+            # Move to the next node
+            current_node = current_node.get_next_node()
+
+        # If no matching node is found, return None
+        if node_to_remove is None:
+            return None
+
+        # If the node to remove is the head, use remove_head()
+        if node_to_remove == self.head_node:
+            self.remove_head()
+        # If the node to remove is the tail, use remove_tail()
+        elif node_to_remove == self.tail_node:
+            self.remove_tail()
+        # If the node is in the middle, adjust the pointers of adjacent nodes
+       
