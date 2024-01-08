@@ -15,5 +15,12 @@ def reporter(reporter_id):
     <a href="/">Return to home page</a>
     '''
 
+@app.route('/article/<article_name>')
+def article(article_name):
+  return f'''
+  <h2>{article_name.replace('-', ' ').title()}</h2>
+  <a href = '/'> Return back to home page </a>
+  '''
+
 if __name__ == '__main__':
     app.run(debug=True)
