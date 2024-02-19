@@ -42,8 +42,19 @@ def display_options():
 
 choice_clean = display_options()
 
+row_spot = input('Please choose a spot in the row: ')
+symbol = input('Please select X or O')
+
+
+
+
 if choice_clean == "row 1":
-    print('Yes')
+    print(row_spot)
+    if row_spot == 1:
+        print(symbol)
+        if symbol == 'X' or 'O':
+            print("hi")
+
 elif choice_clean == "row 2":
     print('Yes')
 elif choice_clean == "row 3":
